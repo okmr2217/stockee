@@ -19,6 +19,7 @@ export async function getGroups() {
   const memberGroups = await prisma.group.findMany({
     where: {
       members: { some: { userId: user.id } },
+      ownerId: { not: user.id },
     },
     include: {
       owner: { select: { name: true } },
