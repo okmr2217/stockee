@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogoutButton } from "@/components/auth/logout-button";
+import { AccountSettings } from "@/components/settings/account-settings";
 import { PersonalCategories } from "./personal-categories";
 
 export default async function SettingsPage() {
@@ -34,21 +34,7 @@ export default async function SettingsPage() {
       </div>
 
       <div className="space-y-6 p-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>アカウント情報</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <p className="text-sm text-muted-foreground">ユーザー名</p>
-              <p className="font-medium">{user.name}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">メールアドレス</p>
-              <p className="font-medium">{user.email}</p>
-            </div>
-          </CardContent>
-        </Card>
+        <AccountSettings user={{ id: user.id, name: user.name, email: user.email }} />
 
         <PersonalCategories />
 
