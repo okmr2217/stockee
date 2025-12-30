@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
-import { Plus, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import {
   DndContext,
   closestCenter,
@@ -135,12 +135,6 @@ export function ItemList() {
               </Link>
             </Button>
           )}
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="/items/new">
-              <Plus className="h-5 w-5" />
-              <span className="sr-only">品目を追加</span>
-            </Link>
-          </Button>
         </div>
       </div>
 
