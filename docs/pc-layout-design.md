@@ -46,6 +46,7 @@
 ```
 
 数値入力フィールドは適切な幅に制限:
+
 - 価格: `sm:max-w-32`
 - 在庫数: `sm:w-24`
 - 単位: `sm:w-20`
@@ -56,7 +57,7 @@
 **対象ファイル**: `src/components/item/item-card.tsx`
 
 ```tsx
-className="... transition-colors hover:bg-muted/50"
+className = "... transition-colors hover:bg-muted/50";
 ```
 
 - 通常状態: マウスホバーで背景色が薄く変化
@@ -64,12 +65,12 @@ className="... transition-colors hover:bg-muted/50"
 
 ## 変更ファイル一覧
 
-| ファイル | 変更内容 |
-|---------|---------|
-| `src/app/(main)/layout.tsx` | 中央寄せ + 最大幅 |
-| `src/components/layout/header.tsx` | 中央寄せ + 最大幅 |
+| ファイル                            | 変更内容                  |
+| ----------------------------------- | ------------------------- |
+| `src/app/(main)/layout.tsx`         | 中央寄せ + 最大幅         |
+| `src/components/layout/header.tsx`  | 中央寄せ + 最大幅         |
 | `src/components/item/item-form.tsx` | 横並びレイアウト + 幅制限 |
-| `src/components/item/item-card.tsx` | ホバー効果 |
+| `src/components/item/item-card.tsx` | ホバー効果                |
 
 ## 選択理由
 

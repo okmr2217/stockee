@@ -32,11 +32,18 @@ export function GroupSwitcher() {
         const data = await getGroups();
         const allGroups: GroupInfo[] = [
           ...data.owned.map((g) => ({ id: g.id, name: g.name, isOwner: true })),
-          ...data.joined.map((g) => ({ id: g.id, name: g.name, isOwner: false })),
+          ...data.joined.map((g) => ({
+            id: g.id,
+            name: g.name,
+            isOwner: false,
+          })),
         ];
         setGroups(allGroups);
 
-        if (selectedGroupId && !allGroups.find((g) => g.id === selectedGroupId)) {
+        if (
+          selectedGroupId &&
+          !allGroups.find((g) => g.id === selectedGroupId)
+        ) {
           setSelectedGroupId(null);
         }
       } catch {
@@ -87,10 +94,15 @@ export function GroupSwitcher() {
         {groups.length > 0 && <DropdownMenuSeparator />}
 
         {groups.map((group) => (
-          <DropdownMenuItem key={group.id} onClick={() => handleSelect(group.id)}>
+          <DropdownMenuItem
+            key={group.id}
+            onClick={() => handleSelect(group.id)}
+          >
             <Users className="mr-2 h-4 w-4" />
             <span className="truncate">{group.name}</span>
-            {selectedGroupId === group.id && <Check className="ml-auto h-4 w-4" />}
+            {selectedGroupId === group.id && (
+              <Check className="ml-auto h-4 w-4" />
+            )}
           </DropdownMenuItem>
         ))}
 

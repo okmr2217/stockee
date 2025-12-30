@@ -69,9 +69,7 @@ export default function LoginPage() {
             />
             <h1 className="text-3xl font-bold font-logo">Stockee</h1>
           </CardTitle>
-          <CardDescription>
-            アカウントにログインしてください
-          </CardDescription>
+          <CardDescription>アカウントにログインしてください</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <CardContent className="space-y-4">

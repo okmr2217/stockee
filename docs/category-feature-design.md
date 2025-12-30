@@ -6,11 +6,11 @@
 
 ## 設計方針
 
-| 項目 | 方針 |
-|------|------|
-| カテゴリ管理範囲 | グループごと、または個人で独自のカテゴリを管理 |
-| 品目へのカテゴリ割り当て | 1品目につき1カテゴリのみ |
-| 階層構造 | なし（フラット） |
+| 項目                     | 方針                                           |
+| ------------------------ | ---------------------------------------------- |
+| カテゴリ管理範囲         | グループごと、または個人で独自のカテゴリを管理 |
+| 品目へのカテゴリ割り当て | 1品目につき1カテゴリのみ                       |
+| 階層構造                 | なし（フラット）                               |
 
 ## データベース設計
 
@@ -42,6 +42,7 @@ model Category {
 ```
 
 **ルール:**
+
 - `groupId`と`userId`はどちらか一方のみ設定される（排他的）
 - グループのカテゴリ: `groupId`が設定され、`userId`はnull
 - 個人のカテゴリ: `userId`が設定され、`groupId`はnull
@@ -81,13 +82,13 @@ model User {
 
 ### Server Actions
 
-| アクション | 説明 |
-|-----------|------|
-| `getCategories(groupId?)` | カテゴリ一覧を取得（groupIdがnullの場合は個人カテゴリ） |
-| `createCategory(data, groupId?)` | カテゴリを作成（groupIdがnullの場合は個人カテゴリ） |
-| `updateCategory(categoryId, data)` | カテゴリを更新 |
-| `deleteCategory(categoryId)` | カテゴリを削除（品目のcategoryIdはnullに） |
-| `reorderCategories(items, groupId?)` | カテゴリの並び順を更新 |
+| アクション                           | 説明                                                    |
+| ------------------------------------ | ------------------------------------------------------- |
+| `getCategories(groupId?)`            | カテゴリ一覧を取得（groupIdがnullの場合は個人カテゴリ） |
+| `createCategory(data, groupId?)`     | カテゴリを作成（groupIdがnullの場合は個人カテゴリ）     |
+| `updateCategory(categoryId, data)`   | カテゴリを更新                                          |
+| `deleteCategory(categoryId)`         | カテゴリを削除（品目のcategoryIdはnullに）              |
+| `reorderCategories(items, groupId?)` | カテゴリの並び順を更新                                  |
 
 ### バリデーションスキーマ
 
@@ -95,7 +96,10 @@ model User {
 // src/lib/validations/category.ts
 export const createCategorySchema = z.object({
   name: z.string().min(1, "カテゴリ名は必須です").max(50),
-  color: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+  color: z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/)
+    .optional(),
 });
 ```
 
@@ -108,6 +112,7 @@ export const createCategorySchema = z.object({
 **パス**: `/groups/[groupId]`（グループ設定画面内）
 
 **機能**:
+
 - カテゴリ一覧表示
 - カテゴリ追加（名前、色）
 - カテゴリ編集
@@ -119,6 +124,7 @@ export const createCategorySchema = z.object({
 **パス**: `/settings`（設定画面内）
 
 **機能**:
+
 - グループ用と同じ機能を個人向けに提供
 
 ### 2. 品目フォーム変更
@@ -126,6 +132,7 @@ export const createCategorySchema = z.object({
 **ファイル**: `src/components/item/item-form.tsx`
 
 **変更内容**:
+
 - カテゴリ選択ドロップダウンを追加
 - カテゴリ未選択も許可（任意項目）
 - グループ選択時はグループのカテゴリ、未選択時は個人のカテゴリを表示
@@ -135,6 +142,7 @@ export const createCategorySchema = z.object({
 **ファイル**: `src/components/item/item-list.tsx`
 
 **変更内容**:
+
 - カテゴリフィルタータブ/チップを追加
 - 「すべて」「未分類」+ 各カテゴリで絞り込み
 - グループ選択時はグループのカテゴリ、未選択時は個人のカテゴリでフィルタリング

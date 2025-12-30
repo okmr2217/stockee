@@ -71,9 +71,7 @@ export default function SignUpPage() {
             />
             <h1 className="text-3xl font-bold font-logo">Stockee</h1>
           </CardTitle>
-          <CardDescription>
-            新規アカウントを作成してください
-          </CardDescription>
+          <CardDescription>新規アカウントを作成してください</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <CardContent className="space-y-4">

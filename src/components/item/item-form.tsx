@@ -16,10 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  createItemSchema,
-  type CreateItemInput,
-} from "@/lib/validations/item";
+import { createItemSchema, type CreateItemInput } from "@/lib/validations/item";
 import { createItem, updateItem } from "@/actions/item";
 import { getCategories } from "@/actions/category";
 import { useGroup } from "@/contexts/group-context";
@@ -100,7 +97,9 @@ export function ItemForm({ item }: ItemFormProps) {
             aria-invalid={!!errors.name}
           />
           {errors.name && (
-            <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>
+            <p className="mt-1 text-sm text-destructive">
+              {errors.name.message}
+            </p>
           )}
         </div>
       </div>
@@ -108,7 +107,11 @@ export function ItemForm({ item }: ItemFormProps) {
       {/* 商品名 */}
       <div className="space-y-2 sm:grid sm:grid-cols-[140px_1fr] sm:items-center sm:gap-4 sm:space-y-0">
         <Label htmlFor="productName">商品名</Label>
-        <Input id="productName" placeholder="例: 明治おいしい牛乳 1L" {...register("productName")} />
+        <Input
+          id="productName"
+          placeholder="例: 明治おいしい牛乳 1L"
+          {...register("productName")}
+        />
       </div>
 
       {/* 価格 */}
@@ -143,7 +146,9 @@ export function ItemForm({ item }: ItemFormProps) {
               aria-invalid={!!errors.quantity}
             />
             {errors.quantity && (
-              <p className="mt-1 text-sm text-destructive">{errors.quantity.message}</p>
+              <p className="mt-1 text-sm text-destructive">
+                {errors.quantity.message}
+              </p>
             )}
           </div>
           <div>
@@ -163,7 +168,9 @@ export function ItemForm({ item }: ItemFormProps) {
               </SelectContent>
             </Select>
             {errors.unit && (
-              <p className="mt-1 text-sm text-destructive">{errors.unit.message}</p>
+              <p className="mt-1 text-sm text-destructive">
+                {errors.unit.message}
+              </p>
             )}
           </div>
         </div>
@@ -171,7 +178,9 @@ export function ItemForm({ item }: ItemFormProps) {
 
       {/* 在庫閾値 */}
       <div className="space-y-2 sm:grid sm:grid-cols-[140px_1fr] sm:items-start sm:gap-4 sm:space-y-0">
-        <Label htmlFor="threshold" className="sm:pt-2">在庫閾値</Label>
+        <Label htmlFor="threshold" className="sm:pt-2">
+          在庫閾値
+        </Label>
         <div>
           <Input
             id="threshold"
@@ -188,7 +197,9 @@ export function ItemForm({ item }: ItemFormProps) {
             この数量未満になると警告を表示します
           </p>
           {errors.threshold && (
-            <p className="mt-1 text-sm text-destructive">{errors.threshold.message}</p>
+            <p className="mt-1 text-sm text-destructive">
+              {errors.threshold.message}
+            </p>
           )}
         </div>
       </div>
@@ -199,7 +210,9 @@ export function ItemForm({ item }: ItemFormProps) {
           <Label htmlFor="category">カテゴリ</Label>
           <Select
             value={currentCategoryId ?? "none"}
-            onValueChange={(value) => setValue("categoryId", value === "none" ? null : value)}
+            onValueChange={(value) =>
+              setValue("categoryId", value === "none" ? null : value)
+            }
           >
             <SelectTrigger id="category" className="sm:max-w-48">
               <SelectValue placeholder="カテゴリを選択" />
@@ -226,8 +239,15 @@ export function ItemForm({ item }: ItemFormProps) {
 
       {/* 備考 */}
       <div className="space-y-2 sm:grid sm:grid-cols-[140px_1fr] sm:items-start sm:gap-4 sm:space-y-0">
-        <Label htmlFor="note" className="sm:pt-2">備考</Label>
-        <Textarea id="note" rows={3} placeholder="購入場所やメモなど" {...register("note")} />
+        <Label htmlFor="note" className="sm:pt-2">
+          備考
+        </Label>
+        <Textarea
+          id="note"
+          rows={3}
+          placeholder="購入場所やメモなど"
+          {...register("note")}
+        />
       </div>
 
       <div className="sm:grid sm:grid-cols-[140px_1fr] sm:gap-4">

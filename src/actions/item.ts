@@ -16,10 +16,7 @@ async function verifyGroupAccess(userId: string, groupId: string) {
   const group = await prisma.group.findFirst({
     where: {
       id: groupId,
-      OR: [
-        { ownerId: userId },
-        { members: { some: { userId } } },
-      ],
+      OR: [{ ownerId: userId }, { members: { some: { userId } } }],
     },
   });
   return !!group;
@@ -69,7 +66,10 @@ export async function getItem(id: string) {
   return verifyItemAccess(user.id, id);
 }
 
-export async function createItem(input: CreateItemInput, groupId?: string | null) {
+export async function createItem(
+  input: CreateItemInput,
+  groupId?: string | null,
+) {
   const user = await getCurrentUser();
   const validated = createItemSchema.parse(input);
 
@@ -188,7 +188,10 @@ export async function decrementStock(id: string) {
   return item;
 }
 
-export async function reorderItems(input: ReorderItemsInput, groupId?: string | null) {
+export async function reorderItems(
+  input: ReorderItemsInput,
+  groupId?: string | null,
+) {
   const user = await getCurrentUser();
   const validated = reorderItemsSchema.parse(input);
 
@@ -220,8 +223,8 @@ export async function reorderItems(input: ReorderItemsInput, groupId?: string | 
       prisma.item.update({
         where: { id: item.id },
         data: { sortOrder: item.sortOrder },
-      })
-    )
+      }),
+    ),
   );
 
   revalidatePath("/");

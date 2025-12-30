@@ -18,10 +18,7 @@ async function verifyGroupAccess(groupId: string) {
   const group = await prisma.group.findFirst({
     where: {
       id: groupId,
-      OR: [
-        { ownerId: user.id },
-        { members: { some: { userId: user.id } } },
-      ],
+      OR: [{ ownerId: user.id }, { members: { some: { userId: user.id } } }],
     },
   });
 
@@ -73,7 +70,10 @@ export async function getCategories(groupId?: string | null) {
   }));
 }
 
-export async function createCategory(input: CreateCategoryInput, groupId?: string | null) {
+export async function createCategory(
+  input: CreateCategoryInput,
+  groupId?: string | null,
+) {
   const user = await getCurrentUser();
   const validated = createCategorySchema.parse(input);
 
@@ -143,7 +143,10 @@ export async function createCategory(input: CreateCategoryInput, groupId?: strin
   return category;
 }
 
-export async function updateCategory(categoryId: string, input: UpdateCategoryInput) {
+export async function updateCategory(
+  categoryId: string,
+  input: UpdateCategoryInput,
+) {
   const user = await getCurrentUser();
   const validated = updateCategorySchema.parse(input);
 
@@ -248,7 +251,10 @@ export async function deleteCategory(categoryId: string) {
   revalidatePath("/");
 }
 
-export async function reorderCategories(items: ReorderCategoriesInput, groupId?: string | null) {
+export async function reorderCategories(
+  items: ReorderCategoriesInput,
+  groupId?: string | null,
+) {
   await getCurrentUser();
   const validated = reorderCategoriesSchema.parse(items);
 
@@ -261,8 +267,8 @@ export async function reorderCategories(items: ReorderCategoriesInput, groupId?:
       prisma.category.update({
         where: { id: item.id },
         data: { sortOrder: item.sortOrder },
-      })
-    )
+      }),
+    ),
   );
 
   revalidatePath("/");

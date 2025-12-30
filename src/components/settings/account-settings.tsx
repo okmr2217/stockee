@@ -110,7 +110,9 @@ export function AccountSettings({ user }: AccountSettingsProps) {
       });
 
       if (result.error) {
-        setPasswordError(result.error.message || "パスワードの変更に失敗しました");
+        setPasswordError(
+          result.error.message || "パスワードの変更に失敗しました",
+        );
         return;
       }
 
@@ -191,14 +193,14 @@ export function AccountSettings({ user }: AccountSettingsProps) {
               </Button>
             </div>
           )}
-          {nameError && (
-            <p className="text-sm text-destructive">{nameError}</p>
-          )}
+          {nameError && <p className="text-sm text-destructive">{nameError}</p>}
         </div>
 
         {/* メールアドレス */}
         <div className="space-y-1">
-          <Label className="text-sm text-muted-foreground">メールアドレス</Label>
+          <Label className="text-sm text-muted-foreground">
+            メールアドレス
+          </Label>
           <p className="font-medium">{user.email}</p>
         </div>
 
@@ -207,7 +209,10 @@ export function AccountSettings({ user }: AccountSettingsProps) {
           <Label className="text-sm text-muted-foreground">パスワード</Label>
           <div className="flex items-center justify-between">
             <p className="font-medium">••••••••</p>
-            <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
+            <Dialog
+              open={isPasswordDialogOpen}
+              onOpenChange={setIsPasswordDialogOpen}
+            >
               <DialogTrigger asChild>
                 <Button size="icon" variant="ghost">
                   <Pencil className="h-4 w-4" />
@@ -254,7 +259,9 @@ export function AccountSettings({ user }: AccountSettingsProps) {
                     <p className="text-xs text-muted-foreground">8文字以上</p>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">新しいパスワード（確認）</Label>
+                    <Label htmlFor="confirmPassword">
+                      新しいパスワード（確認）
+                    </Label>
                     <Input
                       id="confirmPassword"
                       type="password"

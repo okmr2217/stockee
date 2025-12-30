@@ -6,7 +6,13 @@ import Link from "next/link";
 import { ArrowLeft, Users } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { joinGroup } from "@/actions/group";
 import { useGroup } from "@/contexts/group-context";
 
@@ -17,7 +23,13 @@ type GroupInfo = {
   memberCount: number;
 };
 
-export function JoinGroupForm({ group, inviteCode }: { group: GroupInfo; inviteCode: string }) {
+export function JoinGroupForm({
+  group,
+  inviteCode,
+}: {
+  group: GroupInfo;
+  inviteCode: string;
+}) {
   const router = useRouter();
   const { setSelectedGroupId } = useGroup();
   const [error, setError] = useState("");
@@ -69,7 +81,11 @@ export function JoinGroupForm({ group, inviteCode }: { group: GroupInfo; inviteC
                 {error}
               </div>
             )}
-            <Button className="w-full" onClick={handleJoin} disabled={isJoining}>
+            <Button
+              className="w-full"
+              onClick={handleJoin}
+              disabled={isJoining}
+            >
               {isJoining ? "参加中..." : "グループに参加する"}
             </Button>
           </CardContent>

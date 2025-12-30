@@ -94,7 +94,11 @@ async function main() {
       inviteCode: "sharehouse-invite-code",
       ownerId: user2.id,
       members: {
-        create: [{ userId: user2.id }, { userId: user1.id }, { userId: user3.id }],
+        create: [
+          { userId: user2.id },
+          { userId: user1.id },
+          { userId: user3.id },
+        ],
       },
     },
   });
@@ -103,8 +107,20 @@ async function main() {
   await prisma.item.deleteMany({ where: { userId: user1.id, groupId: null } });
   await prisma.item.createMany({
     data: [
-      { name: "りんご", unit: "個", quantity: 10, sortOrder: 0, userId: user1.id },
-      { name: "みかん", unit: "個", quantity: 5, sortOrder: 1, userId: user1.id },
+      {
+        name: "りんご",
+        unit: "個",
+        quantity: 10,
+        sortOrder: 0,
+        userId: user1.id,
+      },
+      {
+        name: "みかん",
+        unit: "個",
+        quantity: 5,
+        sortOrder: 1,
+        userId: user1.id,
+      },
       { name: "牛乳", unit: "本", quantity: 2, sortOrder: 2, userId: user1.id },
     ],
   });
@@ -113,8 +129,20 @@ async function main() {
   await prisma.item.deleteMany({ where: { userId: user2.id, groupId: null } });
   await prisma.item.createMany({
     data: [
-      { name: "ビール", unit: "缶", quantity: 6, sortOrder: 0, userId: user2.id },
-      { name: "チーズ", unit: "個", quantity: 3, sortOrder: 1, userId: user2.id },
+      {
+        name: "ビール",
+        unit: "缶",
+        quantity: 6,
+        sortOrder: 0,
+        userId: user2.id,
+      },
+      {
+        name: "チーズ",
+        unit: "個",
+        quantity: 3,
+        sortOrder: 1,
+        userId: user2.id,
+      },
     ],
   });
 
@@ -122,7 +150,13 @@ async function main() {
   await prisma.item.deleteMany({ where: { userId: user3.id, groupId: null } });
   await prisma.item.createMany({
     data: [
-      { name: "ヨーグルト", unit: "個", quantity: 4, sortOrder: 0, userId: user3.id },
+      {
+        name: "ヨーグルト",
+        unit: "個",
+        quantity: 4,
+        sortOrder: 0,
+        userId: user3.id,
+      },
       { name: "パン", unit: "斤", quantity: 1, sortOrder: 1, userId: user3.id },
     ],
   });
@@ -131,10 +165,34 @@ async function main() {
   await prisma.item.deleteMany({ where: { groupId: familyGroup.id } });
   await prisma.item.createMany({
     data: [
-      { name: "お米", unit: "kg", quantity: 5, sortOrder: 0, groupId: familyGroup.id },
-      { name: "醤油", unit: "本", quantity: 1, sortOrder: 1, groupId: familyGroup.id },
-      { name: "味噌", unit: "パック", quantity: 2, sortOrder: 2, groupId: familyGroup.id },
-      { name: "卵", unit: "パック", quantity: 1, sortOrder: 3, groupId: familyGroup.id },
+      {
+        name: "お米",
+        unit: "kg",
+        quantity: 5,
+        sortOrder: 0,
+        groupId: familyGroup.id,
+      },
+      {
+        name: "醤油",
+        unit: "本",
+        quantity: 1,
+        sortOrder: 1,
+        groupId: familyGroup.id,
+      },
+      {
+        name: "味噌",
+        unit: "パック",
+        quantity: 2,
+        sortOrder: 2,
+        groupId: familyGroup.id,
+      },
+      {
+        name: "卵",
+        unit: "パック",
+        quantity: 1,
+        sortOrder: 3,
+        groupId: familyGroup.id,
+      },
     ],
   });
 
@@ -142,11 +200,41 @@ async function main() {
   await prisma.item.deleteMany({ where: { groupId: shareHouseGroup.id } });
   await prisma.item.createMany({
     data: [
-      { name: "トイレットペーパー", unit: "ロール", quantity: 12, sortOrder: 0, groupId: shareHouseGroup.id },
-      { name: "洗剤", unit: "本", quantity: 2, sortOrder: 1, groupId: shareHouseGroup.id },
-      { name: "ゴミ袋", unit: "枚", quantity: 30, sortOrder: 2, groupId: shareHouseGroup.id },
-      { name: "シャンプー", unit: "本", quantity: 1, sortOrder: 3, groupId: shareHouseGroup.id },
-      { name: "ティッシュ", unit: "箱", quantity: 5, sortOrder: 4, groupId: shareHouseGroup.id },
+      {
+        name: "トイレットペーパー",
+        unit: "ロール",
+        quantity: 12,
+        sortOrder: 0,
+        groupId: shareHouseGroup.id,
+      },
+      {
+        name: "洗剤",
+        unit: "本",
+        quantity: 2,
+        sortOrder: 1,
+        groupId: shareHouseGroup.id,
+      },
+      {
+        name: "ゴミ袋",
+        unit: "枚",
+        quantity: 30,
+        sortOrder: 2,
+        groupId: shareHouseGroup.id,
+      },
+      {
+        name: "シャンプー",
+        unit: "本",
+        quantity: 1,
+        sortOrder: 3,
+        groupId: shareHouseGroup.id,
+      },
+      {
+        name: "ティッシュ",
+        unit: "箱",
+        quantity: 5,
+        sortOrder: 4,
+        groupId: shareHouseGroup.id,
+      },
     ],
   });
 

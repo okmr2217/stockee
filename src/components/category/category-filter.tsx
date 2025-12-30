@@ -31,7 +31,7 @@ export function CategoryFilter({
           "flex-shrink-0 rounded-full px-3 py-1 text-sm font-medium transition-colors",
           selectedCategoryId === null
             ? "bg-primary text-primary-foreground"
-            : "bg-muted text-muted-foreground hover:bg-muted/80"
+            : "bg-muted text-muted-foreground hover:bg-muted/80",
         )}
       >
         すべて
@@ -42,7 +42,7 @@ export function CategoryFilter({
           "flex-shrink-0 rounded-full px-3 py-1 text-sm font-medium transition-colors",
           selectedCategoryId === "uncategorized"
             ? "bg-primary text-primary-foreground"
-            : "bg-muted text-muted-foreground hover:bg-muted/80"
+            : "bg-muted text-muted-foreground hover:bg-muted/80",
         )}
       >
         未分類
@@ -55,14 +55,14 @@ export function CategoryFilter({
             "flex-shrink-0 flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition-colors",
             selectedCategoryId === category.id
               ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
+              : "bg-muted text-muted-foreground hover:bg-muted/80",
           )}
         >
           {category.color && (
             <span
               className={cn(
                 "h-2.5 w-2.5 rounded-full",
-                selectedCategoryId === category.id && "opacity-80"
+                selectedCategoryId === category.id && "opacity-80",
               )}
               style={{ backgroundColor: category.color }}
             />

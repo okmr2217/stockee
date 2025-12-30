@@ -11,7 +11,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { createCategory, updateCategory, deleteCategory, reorderCategories } from "@/actions/category";
+import {
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  reorderCategories,
+} from "@/actions/category";
 import { CATEGORY_COLORS } from "@/lib/validations/category";
 
 type Category = {
@@ -28,7 +33,11 @@ type CategoryListProps = {
   onUpdate: () => void;
 };
 
-export function CategoryList({ groupId, categories, onUpdate }: CategoryListProps) {
+export function CategoryList({
+  groupId,
+  categories,
+  onUpdate,
+}: CategoryListProps) {
   const [isPending, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
@@ -65,7 +74,10 @@ export function CategoryList({ groupId, categories, onUpdate }: CategoryListProp
     startTransition(async () => {
       try {
         if (editingCategory) {
-          await updateCategory(editingCategory.id, { name: name.trim(), color });
+          await updateCategory(editingCategory.id, {
+            name: name.trim(),
+            color,
+          });
         } else {
           await createCategory({ name: name.trim(), color }, groupId);
         }
@@ -79,7 +91,11 @@ export function CategoryList({ groupId, categories, onUpdate }: CategoryListProp
 
   const handleDelete = (category: Category) => {
     if (category.itemCount > 0) {
-      if (!confirm(`「${category.name}」には${category.itemCount}件の品目が登録されています。削除すると、これらの品目は未分類になります。削除しますか？`)) {
+      if (
+        !confirm(
+          `「${category.name}」には${category.itemCount}件の品目が登録されています。削除すると、これらの品目は未分類になります。削除しますか？`,
+        )
+      ) {
         return;
       }
     } else if (!confirm(`「${category.name}」を削除しますか？`)) {
@@ -179,7 +195,9 @@ export function CategoryList({ groupId, categories, onUpdate }: CategoryListProp
                     type="button"
                     onClick={() => setColor(null)}
                     className={`h-8 w-8 rounded-full border-2 bg-muted ${
-                      color === null ? "border-primary ring-2 ring-primary/20" : "border-transparent"
+                      color === null
+                        ? "border-primary ring-2 ring-primary/20"
+                        : "border-transparent"
                     }`}
                   />
                   {CATEGORY_COLORS.map((c) => (
@@ -188,7 +206,9 @@ export function CategoryList({ groupId, categories, onUpdate }: CategoryListProp
                       type="button"
                       onClick={() => setColor(c)}
                       className={`h-8 w-8 rounded-full border-2 ${
-                        color === c ? "border-primary ring-2 ring-primary/20" : "border-transparent"
+                        color === c
+                          ? "border-primary ring-2 ring-primary/20"
+                          : "border-transparent"
                       }`}
                       style={{ backgroundColor: c }}
                     />
@@ -196,7 +216,11 @@ export function CategoryList({ groupId, categories, onUpdate }: CategoryListProp
                 </div>
               </div>
               <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={handleCloseDialog}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleCloseDialog}
+                >
                   キャンセル
                 </Button>
                 <Button type="submit" disabled={isPending || !name.trim()}>

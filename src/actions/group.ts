@@ -3,7 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth-utils";
-import { createGroupSchema, type CreateGroupInput } from "@/lib/validations/group";
+import {
+  createGroupSchema,
+  type CreateGroupInput,
+} from "@/lib/validations/group";
 
 export async function getGroups() {
   const user = await getCurrentUser();
@@ -53,10 +56,7 @@ export async function getGroup(id: string) {
   const group = await prisma.group.findFirst({
     where: {
       id,
-      OR: [
-        { ownerId: user.id },
-        { members: { some: { userId: user.id } } },
-      ],
+      OR: [{ ownerId: user.id }, { members: { some: { userId: user.id } } }],
     },
     include: {
       owner: { select: { id: true, name: true, email: true } },
@@ -187,7 +187,9 @@ export async function leaveGroup(groupId: string) {
   }
 
   if (group.ownerId === user.id) {
-    throw new Error("オーナーはグループを脱退できません。グループを削除してください。");
+    throw new Error(
+      "オーナーはグループを脱退できません。グループを削除してください。",
+    );
   }
 
   const membership = await prisma.groupMember.findUnique({

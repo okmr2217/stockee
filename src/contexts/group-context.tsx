@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, startTransition } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  startTransition,
+} from "react";
 
 type GroupContextType = {
   selectedGroupId: string | null;
@@ -12,7 +19,9 @@ const GroupContext = createContext<GroupContextType | undefined>(undefined);
 const STORAGE_KEY = "stockee-selected-group";
 
 export function GroupProvider({ children }: { children: React.ReactNode }) {
-  const [selectedGroupId, setSelectedGroupIdState] = useState<string | null>(null);
+  const [selectedGroupId, setSelectedGroupIdState] = useState<string | null>(
+    null,
+  );
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -20,11 +29,11 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
     if (stored) {
       startTransition(() => {
         setSelectedGroupIdState(stored);
-      })
+      });
     }
     startTransition(() => {
       setIsLoaded(true);
-    })
+    });
   }, []);
 
   const setSelectedGroupId = useCallback((id: string | null) => {

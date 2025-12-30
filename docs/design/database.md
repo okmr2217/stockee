@@ -113,28 +113,33 @@ model Item {
 ## テーブル説明
 
 ### users
+
 Better Authが管理するユーザーテーブル
 
 ### sessions
+
 Better Authが管理するセッションテーブル
 
 ### accounts
+
 Better Authが管理するアカウントテーブル（メール+パスワード用）
 
 ### verifications
+
 Better Authが管理する検証トークンテーブル
 
 ### items
+
 品目テーブル（アプリ固有）
 
-| カラム | 型 | 説明 |
-|--------|------|------|
-| id | cuid | 主キー |
-| userId | string | ユーザーID（FK） |
-| name | string | 品目名 |
-| productName | string? | 商品名 |
-| price | int? | 価格（円） |
-| stock | int | 在庫数（デフォルト: 0） |
-| unit | string | 単位（デフォルト: 個） |
-| note | string? | 備考 |
-| order | int | 表示順（デフォルト: 0） |
+| カラム      | 型      | 説明                    |
+| ----------- | ------- | ----------------------- |
+| id          | cuid    | 主キー                  |
+| userId      | string  | ユーザーID（FK）        |
+| name        | string  | 品目名                  |
+| productName | string? | 商品名                  |
+| price       | int?    | 価格（円）              |
+| stock       | int     | 在庫数（デフォルト: 0） |
+| unit        | string  | 単位（デフォルト: 個）  |
+| note        | string? | 備考                    |
+| order       | int     | 表示順（デフォルト: 0） |

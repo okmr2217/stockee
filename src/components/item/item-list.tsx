@@ -39,7 +39,9 @@ export function ItemList() {
   const { selectedGroupId } = useGroup();
   const [items, setItems] = useState<ItemWithCategory[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   const sensors = useSensors(
@@ -50,7 +52,7 @@ export function ItemList() {
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   useEffect(() => {

@@ -3,11 +3,31 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Copy, Check, RefreshCw, Trash2, LogOut, Users, Tags } from "lucide-react";
+import {
+  ArrowLeft,
+  Copy,
+  Check,
+  RefreshCw,
+  Trash2,
+  LogOut,
+  Users,
+  Tags,
+} from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { deleteGroup, leaveGroup, regenerateInviteCode, removeMember } from "@/actions/group";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  deleteGroup,
+  leaveGroup,
+  regenerateInviteCode,
+  removeMember,
+} from "@/actions/group";
 import { useGroup } from "@/contexts/group-context";
 import { CategoryList } from "@/components/category/category-list";
 
@@ -53,7 +73,11 @@ export function GroupSettings({ group }: { group: GroupData }) {
   };
 
   const handleRegenerateCode = async () => {
-    if (!confirm("招待リンクを再生成すると、以前のリンクは無効になります。よろしいですか？")) {
+    if (
+      !confirm(
+        "招待リンクを再生成すると、以前のリンクは無効になります。よろしいですか？",
+      )
+    ) {
       return;
     }
     setIsRegenerating(true);
@@ -69,7 +93,11 @@ export function GroupSettings({ group }: { group: GroupData }) {
   };
 
   const handleDeleteGroup = async () => {
-    if (!confirm(`グループ「${group.name}」を削除しますか？この操作は取り消せません。`)) {
+    if (
+      !confirm(
+        `グループ「${group.name}」を削除しますか？この操作は取り消せません。`,
+      )
+    ) {
       return;
     }
     try {
@@ -136,7 +164,11 @@ export function GroupSettings({ group }: { group: GroupData }) {
                   {inviteUrl}
                 </code>
                 <Button variant="outline" size="icon" onClick={handleCopyLink}>
-                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  {copied ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
               <Button
@@ -145,7 +177,9 @@ export function GroupSettings({ group }: { group: GroupData }) {
                 onClick={handleRegenerateCode}
                 disabled={isRegenerating}
               >
-                <RefreshCw className={`mr-2 h-4 w-4 ${isRegenerating ? "animate-spin" : ""}`} />
+                <RefreshCw
+                  className={`mr-2 h-4 w-4 ${isRegenerating ? "animate-spin" : ""}`}
+                />
                 リンクを再生成
               </Button>
             </CardContent>
@@ -164,23 +198,32 @@ export function GroupSettings({ group }: { group: GroupData }) {
               <li className="flex items-center justify-between py-2">
                 <div>
                   <p className="font-medium">{group.owner.name}</p>
-                  <p className="text-sm text-muted-foreground">{group.owner.email}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {group.owner.email}
+                  </p>
                 </div>
                 <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
                   オーナー
                 </span>
               </li>
               {group.members.map((member) => (
-                <li key={member.id} className="flex items-center justify-between py-2">
+                <li
+                  key={member.id}
+                  className="flex items-center justify-between py-2"
+                >
                   <div>
                     <p className="font-medium">{member.user.name}</p>
-                    <p className="text-sm text-muted-foreground">{member.user.email}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {member.user.email}
+                    </p>
                   </div>
                   {group.isOwner && (
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleRemoveMember(member.id, member.user.name)}
+                      onClick={() =>
+                        handleRemoveMember(member.id, member.user.name)
+                      }
                     >
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>
@@ -212,7 +255,9 @@ export function GroupSettings({ group }: { group: GroupData }) {
 
         <Card className="border-destructive/50">
           <CardHeader>
-            <CardTitle className="text-base text-destructive">危険な操作</CardTitle>
+            <CardTitle className="text-base text-destructive">
+              危険な操作
+            </CardTitle>
           </CardHeader>
           <CardContent>
             {group.isOwner ? (

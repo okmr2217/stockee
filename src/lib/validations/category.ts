@@ -1,8 +1,15 @@
 import { z } from "zod";
 
 export const createCategorySchema = z.object({
-  name: z.string().min(1, "カテゴリ名は必須です").max(50, "カテゴリ名は50文字以内で入力してください"),
-  color: z.string().regex(/^#[0-9a-fA-F]{6}$/, "無効な色形式です").nullable().optional(),
+  name: z
+    .string()
+    .min(1, "カテゴリ名は必須です")
+    .max(50, "カテゴリ名は50文字以内で入力してください"),
+  color: z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/, "無効な色形式です")
+    .nullable()
+    .optional(),
 });
 
 export const updateCategorySchema = createCategorySchema.partial();
@@ -11,7 +18,7 @@ export const reorderCategoriesSchema = z.array(
   z.object({
     id: z.string().min(1),
     sortOrder: z.number().int().min(0),
-  })
+  }),
 );
 
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;

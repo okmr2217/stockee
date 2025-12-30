@@ -15,7 +15,8 @@ const quicksand = Quicksand({
 
 export const metadata: Metadata = {
   title: "Stockee - 暮らしの在庫管理",
-  description: "日用品や食料品の在庫をスマホで簡単に管理。家族やルームメイトと共有もできる在庫管理アプリ。",
+  description:
+    "日用品や食料品の在庫をスマホで簡単に管理。家族やルームメイトと共有もできる在庫管理アプリ。",
 };
 
 export default function RootLayout({

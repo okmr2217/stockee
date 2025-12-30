@@ -48,6 +48,6 @@ export const config = {
      * - _next/image (画像最適化)
      * - favicon.ico, sitemap.xml, robots.txt (メタデータファイル)
      */
-    '/((?!api|_next/static|_next/image|.*\\.png$).*)',
+    "/((?!api|_next/static|_next/image|.*\\.png$).*)",
   ],
 };

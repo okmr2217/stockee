@@ -63,8 +63,7 @@ export function ItemCard({ item, onUpdate, noBorderRadius }: ItemCardProps) {
         : "rounded-lg";
 
   // 閾値警告の判定（閾値未満で警告）
-  const showWarning =
-    item.threshold !== null && quantity < item.threshold;
+  const showWarning = item.threshold !== null && quantity < item.threshold;
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("ja-JP").format(price);
@@ -87,7 +86,9 @@ export function ItemCard({ item, onUpdate, noBorderRadius }: ItemCardProps) {
       {/* 1行目: 品目名 + 数量操作 */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 flex-1 items-center gap-1.5 font-medium">
-          {showWarning && <AlertTriangle className="h-4 w-4 shrink-0 text-amber-500" />}
+          {showWarning && (
+            <AlertTriangle className="h-4 w-4 shrink-0 text-amber-500" />
+          )}
           <span className="truncate">{item.name}</span>
         </div>
         <div className="flex shrink-0 items-center gap-1">
@@ -100,7 +101,11 @@ export function ItemCard({ item, onUpdate, noBorderRadius }: ItemCardProps) {
             <Minus className="h-4 w-4" />
           </Button>
           <div className="flex min-w-15 items-center justify-center gap-1 text-sm">
-            <span className={showWarning ? "text-amber-600 dark:text-amber-500" : ""}>
+            <span
+              className={
+                showWarning ? "text-amber-600 dark:text-amber-500" : ""
+              }
+            >
               {quantity}
               {item.threshold != null && (
                 <span className="text-muted-foreground">/{item.threshold}</span>
@@ -144,7 +149,9 @@ export function ItemCard({ item, onUpdate, noBorderRadius }: ItemCardProps) {
             <span
               className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs"
               style={{
-                backgroundColor: item.category.color ? `${item.category.color}20` : undefined,
+                backgroundColor: item.category.color
+                  ? `${item.category.color}20`
+                  : undefined,
                 color: item.category.color || undefined,
               }}
             >
@@ -163,7 +170,9 @@ export function ItemCard({ item, onUpdate, noBorderRadius }: ItemCardProps) {
             {item.productName}
           </span>
           {item.price != null && (
-            <span className="shrink-0 text-muted-foreground">¥{formatPrice(item.price)}</span>
+            <span className="shrink-0 text-muted-foreground">
+              ¥{formatPrice(item.price)}
+            </span>
           )}
         </div>
       </div>

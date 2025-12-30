@@ -3,7 +3,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Tags } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CategoryList } from "@/components/category/category-list";
 import { getCategories } from "@/actions/category";
 
@@ -68,10 +74,7 @@ export function PersonalCategories() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <CategoryList
-          categories={categories}
-          onUpdate={handleUpdate}
-        />
+        <CategoryList categories={categories} onUpdate={handleUpdate} />
       </CardContent>
     </Card>
   );

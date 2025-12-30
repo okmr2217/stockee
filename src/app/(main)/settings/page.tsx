@@ -34,7 +34,9 @@ export default async function SettingsPage() {
       </div>
 
       <div className="space-y-6 p-4">
-        <AccountSettings user={{ id: user.id, name: user.name, email: user.email }} />
+        <AccountSettings
+          user={{ id: user.id, name: user.name, email: user.email }}
+        />
 
         <PersonalCategories />
 
