@@ -20,7 +20,7 @@ import { createItemSchema, type CreateItemInput } from "@/lib/validations/item";
 import { createItem, updateItem } from "@/actions/item";
 import { getCategories } from "@/actions/category";
 import { useGroup } from "@/contexts/group-context";
-import type { ItemModel } from "@/generated/prisma/models/Item";
+import type { Item as ItemModel } from "@/generated/prisma";
 
 const UNITS = ["個", "本", "箱", "パック", "袋", "枚"] as const;
 

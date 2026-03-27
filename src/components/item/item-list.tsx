@@ -21,8 +21,8 @@ import { CategoryFilter } from "@/components/category/category-filter";
 import { getItems, reorderItems } from "@/actions/item";
 import { getCategories } from "@/actions/category";
 import { useGroup } from "@/contexts/group-context";
-import type { ItemModel } from "@/generated/prisma/models/Item";
-import type { CategoryModel } from "@/generated/prisma/models/Category";
+import type { Item as ItemModel } from "@/generated/prisma";
+import type { Category as CategoryModel } from "@/generated/prisma";
 import { Skeleton } from "../ui/skeleton";
 
 type ItemWithCategory = ItemModel & { category: CategoryModel | null };

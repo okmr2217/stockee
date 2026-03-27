@@ -4,8 +4,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical } from "lucide-react";
 import { ItemCard } from "@/components/item/item-card";
-import type { ItemModel } from "@/generated/prisma/models/Item";
-import type { CategoryModel } from "@/generated/prisma/models/Category";
+import type { Item as ItemModel } from "@/generated/prisma";
+import type { Category as CategoryModel } from "@/generated/prisma";
 
 type ItemWithCategory = ItemModel & { category?: CategoryModel | null };
 

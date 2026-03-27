@@ -12,8 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { incrementStock, decrementStock, deleteItem } from "@/actions/item";
-import type { ItemModel } from "@/generated/prisma/models/Item";
-import type { CategoryModel } from "@/generated/prisma/models/Category";
+import type { Item as ItemModel } from "@/generated/prisma";
+import type { Category as CategoryModel } from "@/generated/prisma";
 
 type ItemWithCategory = ItemModel & { category?: CategoryModel | null };
 
