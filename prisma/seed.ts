@@ -2,7 +2,6 @@ import { prisma } from "../src/lib/prisma";
 import { scryptAsync } from "@noble/hashes/scrypt.js";
 import { bytesToHex, randomBytes } from "@noble/hashes/utils.js";
 
-// better-authと完全に同じ形式でパスワードをハッシュ化
 async function hashPassword(password: string): Promise<string> {
   const salt = bytesToHex(randomBytes(16));
   const key = await scryptAsync(password.normalize("NFKC"), salt, {
@@ -17,12 +16,19 @@ async function hashPassword(password: string): Promise<string> {
 async function main() {
   const hashedPassword = await hashPassword("password123");
 
-  // ユーザー1: テストユーザー（グループオーナー）
-  const user1 = await prisma.user.upsert({
-    where: { email: "test@example.com" },
-    update: {},
-    create: {
-      name: "テストユーザー",
+  // 既存データを削除
+  await prisma.item.deleteMany({});
+  await prisma.category.deleteMany({});
+  await prisma.groupMember.deleteMany({});
+  await prisma.group.deleteMany({});
+  await prisma.session.deleteMany({});
+  await prisma.account.deleteMany({});
+  await prisma.user.deleteMany({});
+
+  // ユーザー作成
+  const user1 = await prisma.user.create({
+    data: {
+      name: "山田 一郎",
       email: "test@example.com",
       emailVerified: true,
       accounts: {
@@ -35,17 +41,14 @@ async function main() {
     },
   });
 
-  // ユーザー2: 田中さん（グループメンバー）
-  const user2 = await prisma.user.upsert({
-    where: { email: "tanaka@example.com" },
-    update: {},
-    create: {
-      name: "田中太郎",
-      email: "tanaka@example.com",
+  const user2 = await prisma.user.create({
+    data: {
+      name: "山田 直子",
+      email: "naoko@example.com",
       emailVerified: true,
       accounts: {
         create: {
-          accountId: "tanaka@example.com",
+          accountId: "naoko@example.com",
           providerId: "credential",
           password: hashedPassword,
         },
@@ -53,31 +56,41 @@ async function main() {
     },
   });
 
-  // ユーザー3: 佐藤さん（グループメンバー）
-  const user3 = await prisma.user.upsert({
-    where: { email: "sato@example.com" },
-    update: {},
-    create: {
-      name: "佐藤花子",
-      email: "sato@example.com",
-      emailVerified: true,
-      accounts: {
-        create: {
-          accountId: "sato@example.com",
-          providerId: "credential",
-          password: hashedPassword,
-        },
-      },
-    },
+  // 個人カテゴリ
+  const catFood = await prisma.category.create({
+    data: { name: "食材", color: "#10b981", sortOrder: 0, userId: user1.id },
+  });
+  const catDaily = await prisma.category.create({
+    data: { name: "日用品", color: "#3b82f6", sortOrder: 1, userId: user1.id },
+  });
+  const catDrink = await prisma.category.create({
+    data: { name: "飲み物", color: "#f59e0b", sortOrder: 2, userId: user1.id },
   });
 
-  // グループ1: 家族グループ（user1がオーナー、user2がメンバー）
-  const familyGroup = await prisma.group.upsert({
-    where: { inviteCode: "family-invite-code" },
-    update: {},
-    create: {
-      name: "田中家",
-      inviteCode: "family-invite-code",
+  // 個人アイテム（threshold 未満は amber 警告表示）
+  await prisma.item.createMany({
+    data: [
+      { name: "お米",               unit: "kg",     quantity: 3,  threshold: 2,    price: 500,  productName: "あきたこまち 5kg",      sortOrder: 0,  userId: user1.id, categoryId: catFood.id  },
+      { name: "食パン",             unit: "斤",     quantity: 1,  threshold: 2,    price: 250,  sortOrder: 1,  userId: user1.id, categoryId: catFood.id  },
+      { name: "卵",                 unit: "パック", quantity: 0,  threshold: 1,    price: 228,  productName: "Mサイズ 10個入り",      sortOrder: 2,  userId: user1.id, categoryId: catFood.id  },
+      { name: "牛乳",               unit: "本",     quantity: 2,  threshold: 1,    price: 198,  sortOrder: 3,  userId: user1.id, categoryId: catFood.id  },
+      { name: "バナナ",             unit: "房",     quantity: 1,  threshold: null, price: 198,  sortOrder: 4,  userId: user1.id, categoryId: catFood.id  },
+      { name: "ヨーグルト",         unit: "個",     quantity: 4,  threshold: 2,    price: 148,  sortOrder: 5,  userId: user1.id, categoryId: catFood.id  },
+      { name: "トイレットペーパー", unit: "ロール", quantity: 6,  threshold: 4,    price: 150,  productName: "ダブル 12ロール",       sortOrder: 6,  userId: user1.id, categoryId: catDaily.id },
+      { name: "シャンプー",         unit: "本",     quantity: 1,  threshold: 1,    price: 980,  sortOrder: 7,  userId: user1.id, categoryId: catDaily.id },
+      { name: "洗濯洗剤",           unit: "本",     quantity: 0,  threshold: 1,    price: 498,  productName: "アリエール 4.5kg",      sortOrder: 8,  userId: user1.id, categoryId: catDaily.id },
+      { name: "食器用洗剤",         unit: "本",     quantity: 2,  threshold: 1,    price: 218,  sortOrder: 9,  userId: user1.id, categoryId: catDaily.id },
+      { name: "コーヒー",           unit: "袋",     quantity: 2,  threshold: 1,    price: 698,  productName: "ドリップコーヒー 50杯分", sortOrder: 10, userId: user1.id, categoryId: catDrink.id },
+      { name: "お茶",               unit: "本",     quantity: 6,  threshold: 3,    price: 98,   productName: "2L ペットボトル",        sortOrder: 11, userId: user1.id, categoryId: catDrink.id },
+      { name: "炭酸水",             unit: "本",     quantity: 12, threshold: 6,    price: 88,   sortOrder: 12, userId: user1.id, categoryId: catDrink.id },
+    ],
+  });
+
+  // グループ（家族共有）
+  const familyGroup = await prisma.group.create({
+    data: {
+      name: "山田家",
+      inviteCode: "yamada-family-2026",
       ownerId: user1.id,
       members: {
         create: [{ userId: user1.id }, { userId: user2.id }],
@@ -85,169 +98,34 @@ async function main() {
     },
   });
 
-  // グループ2: シェアハウスグループ（user2がオーナー、user1とuser3がメンバー）
-  const shareHouseGroup = await prisma.group.upsert({
-    where: { inviteCode: "sharehouse-invite-code" },
-    update: {},
-    create: {
-      name: "シェアハウス",
-      inviteCode: "sharehouse-invite-code",
-      ownerId: user2.id,
-      members: {
-        create: [
-          { userId: user2.id },
-          { userId: user1.id },
-          { userId: user3.id },
-        ],
-      },
-    },
+  // グループカテゴリ
+  const groupCatFood = await prisma.category.create({
+    data: { name: "食材", color: "#10b981", sortOrder: 0, groupId: familyGroup.id },
+  });
+  const groupCatConsumable = await prisma.category.create({
+    data: { name: "消耗品", color: "#8b5cf6", sortOrder: 1, groupId: familyGroup.id },
   });
 
-  // user1の個人アイテム（sortOrder付き）
-  await prisma.item.deleteMany({ where: { userId: user1.id, groupId: null } });
+  // グループアイテム
   await prisma.item.createMany({
     data: [
-      {
-        name: "りんご",
-        unit: "個",
-        quantity: 10,
-        sortOrder: 0,
-        userId: user1.id,
-      },
-      {
-        name: "みかん",
-        unit: "個",
-        quantity: 5,
-        sortOrder: 1,
-        userId: user1.id,
-      },
-      { name: "牛乳", unit: "本", quantity: 2, sortOrder: 2, userId: user1.id },
-    ],
-  });
-
-  // user2の個人アイテム
-  await prisma.item.deleteMany({ where: { userId: user2.id, groupId: null } });
-  await prisma.item.createMany({
-    data: [
-      {
-        name: "ビール",
-        unit: "缶",
-        quantity: 6,
-        sortOrder: 0,
-        userId: user2.id,
-      },
-      {
-        name: "チーズ",
-        unit: "個",
-        quantity: 3,
-        sortOrder: 1,
-        userId: user2.id,
-      },
-    ],
-  });
-
-  // user3の個人アイテム
-  await prisma.item.deleteMany({ where: { userId: user3.id, groupId: null } });
-  await prisma.item.createMany({
-    data: [
-      {
-        name: "ヨーグルト",
-        unit: "個",
-        quantity: 4,
-        sortOrder: 0,
-        userId: user3.id,
-      },
-      { name: "パン", unit: "斤", quantity: 1, sortOrder: 1, userId: user3.id },
-    ],
-  });
-
-  // 家族グループの共有アイテム
-  await prisma.item.deleteMany({ where: { groupId: familyGroup.id } });
-  await prisma.item.createMany({
-    data: [
-      {
-        name: "お米",
-        unit: "kg",
-        quantity: 5,
-        sortOrder: 0,
-        groupId: familyGroup.id,
-      },
-      {
-        name: "醤油",
-        unit: "本",
-        quantity: 1,
-        sortOrder: 1,
-        groupId: familyGroup.id,
-      },
-      {
-        name: "味噌",
-        unit: "パック",
-        quantity: 2,
-        sortOrder: 2,
-        groupId: familyGroup.id,
-      },
-      {
-        name: "卵",
-        unit: "パック",
-        quantity: 1,
-        sortOrder: 3,
-        groupId: familyGroup.id,
-      },
-    ],
-  });
-
-  // シェアハウスグループの共有アイテム
-  await prisma.item.deleteMany({ where: { groupId: shareHouseGroup.id } });
-  await prisma.item.createMany({
-    data: [
-      {
-        name: "トイレットペーパー",
-        unit: "ロール",
-        quantity: 12,
-        sortOrder: 0,
-        groupId: shareHouseGroup.id,
-      },
-      {
-        name: "洗剤",
-        unit: "本",
-        quantity: 2,
-        sortOrder: 1,
-        groupId: shareHouseGroup.id,
-      },
-      {
-        name: "ゴミ袋",
-        unit: "枚",
-        quantity: 30,
-        sortOrder: 2,
-        groupId: shareHouseGroup.id,
-      },
-      {
-        name: "シャンプー",
-        unit: "本",
-        quantity: 1,
-        sortOrder: 3,
-        groupId: shareHouseGroup.id,
-      },
-      {
-        name: "ティッシュ",
-        unit: "箱",
-        quantity: 5,
-        sortOrder: 4,
-        groupId: shareHouseGroup.id,
-      },
+      { name: "醤油",     unit: "本",     quantity: 1,  threshold: 1,  price: 298,  sortOrder: 0, groupId: familyGroup.id, categoryId: groupCatFood.id },
+      { name: "味噌",     unit: "パック", quantity: 0,  threshold: 1,  price: 248,  sortOrder: 1, groupId: familyGroup.id, categoryId: groupCatFood.id },
+      { name: "砂糖",     unit: "kg",     quantity: 2,  threshold: 1,  price: 198,  sortOrder: 2, groupId: familyGroup.id, categoryId: groupCatFood.id },
+      { name: "サラダ油", unit: "本",     quantity: 1,  threshold: 1,  price: 348,  sortOrder: 3, groupId: familyGroup.id, categoryId: groupCatFood.id },
+      { name: "ゴミ袋",   unit: "枚",     quantity: 40, threshold: 10, price: null, productName: "45L 半透明",        sortOrder: 4, groupId: familyGroup.id, categoryId: groupCatConsumable.id },
+      { name: "ティッシュ", unit: "箱",   quantity: 5,  threshold: 2,  price: 148,  productName: "5箱パック×2セット", sortOrder: 5, groupId: familyGroup.id, categoryId: groupCatConsumable.id },
+      { name: "ラップ",   unit: "本",     quantity: 1,  threshold: 1,  price: 198,  sortOrder: 6, groupId: familyGroup.id, categoryId: groupCatConsumable.id },
     ],
   });
 
   console.log("Seed completed!");
   console.log("");
-  console.log("テストアカウント（すべてパスワード: password123）:");
-  console.log("  - test@example.com（テストユーザー）");
-  console.log("  - tanaka@example.com（田中太郎）");
-  console.log("  - sato@example.com（佐藤花子）");
+  console.log("テストアカウント（パスワード: password123）:");
+  console.log("  - test@example.com（山田 一郎）");
+  console.log("  - naoko@example.com（山田 直子）");
   console.log("");
-  console.log("グループ:");
-  console.log(`  - 田中家（招待コード: family-invite-code）`);
-  console.log(`  - シェアハウス（招待コード: sharehouse-invite-code）`);
+  console.log("グループ: 山田家（招待コード: yamada-family-2026）");
 }
 
 main()

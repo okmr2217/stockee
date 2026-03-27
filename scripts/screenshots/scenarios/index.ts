@@ -56,7 +56,7 @@ export async function runPcScenarios(page: Page): Promise<void> {
   try {
     await page.goto(`${BASE_URL}/`);
     await page.waitForLoadState('networkidle');
-    const groupSwitcher = page.locator('button:has-text("グループ"), [data-group-switcher], button[aria-label*="グループ"]').first();
+    const groupSwitcher = page.locator('button:has(svg.lucide-chevron-down), button:has-text("個人"), button:has-text("山田家")').first();
     await groupSwitcher.click({ timeout: 5000 });
     await page.waitForTimeout(300);
     await capture(page, 'group-switcher-pc', 'pc');
@@ -108,7 +108,7 @@ export async function runMobileScenarios(page: Page): Promise<void> {
   try {
     await page.goto(`${BASE_URL}/`);
     await page.waitForLoadState('networkidle');
-    const categoryBtn = page.locator('[data-category], button[data-filter], .category-chip, button:has-text("カテゴリ")').first();
+    const categoryBtn = page.locator('button.rounded-full:has-text("食材"), button.rounded-full:has-text("未分類")').first();
     await categoryBtn.click({ timeout: 5000 });
     await page.waitForTimeout(300);
     await capture(page, 'category-filter-active', 'mobile');
@@ -158,7 +158,7 @@ export async function runMobileScenarios(page: Page): Promise<void> {
   try {
     await page.goto(`${BASE_URL}/`);
     await page.waitForLoadState('networkidle');
-    const groupSwitcher = page.locator('button:has-text("グループ"), [data-group-switcher], button[aria-label*="グループ"]').first();
+    const groupSwitcher = page.locator('button:has(svg.lucide-chevron-down), button:has-text("個人"), button:has-text("山田家")').first();
     await groupSwitcher.click({ timeout: 5000 });
     await page.waitForTimeout(400);
     await capture(page, 'group-switcher-mobile', 'mobile');
