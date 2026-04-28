@@ -11,7 +11,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           <Link href={"/"} className="flex items-center">
             <Image
-              src="/icon.png"
+              src="/icon-192.png"
               alt="icon"
               width={36}
               height={36}

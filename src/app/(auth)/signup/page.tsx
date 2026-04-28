@@ -63,7 +63,7 @@ export default function SignUpPage() {
         <CardHeader className="text-center">
           <CardTitle className="flex items-center justify-center gap-1">
             <Image
-              src="/icon.png"
+              src="/icon-192.png"
               alt="icon"
               width={48}
               height={48}
