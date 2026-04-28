@@ -52,24 +52,17 @@ export default function SignUpPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
-      <Image
-        src="/auth-background.png"
-        alt=""
-        fill
-        className="object-cover -z-10"
-        priority
-      />
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md border-0 shadow-none">
         <CardHeader className="text-center">
-          <CardTitle className="flex items-center justify-center gap-1">
+          <CardTitle className="flex items-center flex-col gap-3">
             <Image
               src="/icon-192.png"
               alt="icon"
-              width={48}
-              height={48}
+              width={128}
+              height={128}
               unoptimized
             />
-            <h1 className="text-3xl font-bold font-logo">Stockee</h1>
+            <h1 className="text-[32px] font-bold font-logo">Stockee</h1>
           </CardTitle>
           <CardDescription>新規アカウントを作成してください</CardDescription>
         </CardHeader>
@@ -80,7 +73,7 @@ export default function SignUpPage() {
                 {error}
               </div>
             )}
-            <div className="space-y-2 sm:grid sm:grid-cols-[100px_1fr] sm:items-center sm:gap-4 sm:space-y-0">
+            <div className="space-y-2">
               <Label htmlFor="name">名前</Label>
               <Input
                 id="name"
@@ -92,7 +85,7 @@ export default function SignUpPage() {
                 disabled={isLoading}
               />
             </div>
-            <div className="space-y-2 sm:grid sm:grid-cols-[100px_1fr] sm:items-center sm:gap-4 sm:space-y-0">
+            <div className="space-y-2">
               <Label htmlFor="email">メールアドレス</Label>
               <Input
                 id="email"
@@ -104,7 +97,7 @@ export default function SignUpPage() {
                 disabled={isLoading}
               />
             </div>
-            <div className="space-y-2 sm:grid sm:grid-cols-[100px_1fr] sm:items-center sm:gap-4 sm:space-y-0">
+            <div className="space-y-2">
               <Label htmlFor="password">パスワード</Label>
               <Input
                 id="password"
