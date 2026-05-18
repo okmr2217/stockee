@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GroupSwitcher } from "./group-switcher";
-import Image from "next/image";
 
 export function Header() {
   return (
